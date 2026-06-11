@@ -1,0 +1,11 @@
+---
+plantuml_server_user: plantuml
+plantuml_server_home: /srv/plantuml-server
+
+# Official PlantUML download page recommends the GPL jar for the full feature set.
+plantuml_server_version: "1.2026.6"
+plantuml_server_jar_url: "https://github.com/plantuml/plantuml/releases/download/v{{ plantuml_server_version }}/plantuml-{{ plantuml_server_version }}.jar"
+plantuml_server_jar_path: "{{ plantuml_server_home }}/plantuml.jar"
+
+plantuml_server_service_name: plantuml-server
+plantuml_server_port: 8000

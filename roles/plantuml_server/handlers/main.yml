@@ -1,0 +1,12 @@
+---
+- name: Reload systemd configs
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
+- name: Restart PlantUML server
+  ansible.builtin.systemd:
+    name: "{{ plantuml_server_service_name }}.service"
+    enabled: true
+    state: restarted
+  become: true

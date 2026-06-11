@@ -1,0 +1,6 @@
+---
+- name: MBSE-lite IT infrastructure
+  hosts: localhost
+  connection: local
+  roles:
+    - plantuml_server
