@@ -1,0 +1,21 @@
+[Unit]
+Description=idef0svg Server
+Documentation=https://github.com/jimmyjazz/IDEF0-SVG
+After=network.target
+
+[Service]
+Type=simple
+User={{ idef0_server_user }}
+Group={{ idef0_server_user }}
+WorkingDirectory={{ idef0_server_home }}
+ExecStart={{idef0_server_home }}/.venv/bin/uvicorn --app-dir={{ idef0_server_home }}/idef0-svg-wrapper/examples webapp:app --port={{ idef0_server_port }}
+Restart=on-failure
+RestartSec=5s
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths={{ idef0_server_home }}
+
+[Install]
+WantedBy=multi-user.target

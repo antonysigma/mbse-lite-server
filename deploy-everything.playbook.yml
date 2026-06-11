@@ -4,3 +4,4 @@
   connection: local
   roles:
     - plantuml_server
+    - idef0_server

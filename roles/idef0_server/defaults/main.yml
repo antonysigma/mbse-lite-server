@@ -1,0 +1,4 @@
+---
+idef0_server_user: idef0svg
+idef0_server_home: /srv/idef0svg-server
+idef0_server_port: 5000
