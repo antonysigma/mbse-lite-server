@@ -1,0 +1,40 @@
+name: Validate custom python package
+
+on:
+  pull_request:
+    paths:
+      - roles/idef0_server/files/**
+  push:
+    branches:
+      - master
+    paths:
+      - roles/idef0_server/files/**
+
+jobs:
+  idef0_python:
+    name: idef0_python
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          python-version: "3.12"
+          activate-environment: true
+          enable-cache: true
+          cache-dependency-glob: roles/idef0_server/files/pyproject.toml
+
+      - name: Resolve python 3rd party dependencies
+        run: uv pip install -e roles/idef0_server/files[debug]
+
+      - name: Run static analyzer
+        run: ./.venv/bin/ruff check roles/idef0_server/files
+
+      - name: Run type analyzer
+        run: ./.venv/bin/ty check roles/idef0_server/files
+
+      - name: Run unit tests
+        run: ./.venv/bin/pytest -rx roles/idef0_server/files/tests
