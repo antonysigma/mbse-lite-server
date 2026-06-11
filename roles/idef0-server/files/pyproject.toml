@@ -1,0 +1,45 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools",
+    "setuptools-scm",
+]
+
+[project]
+dependencies = [
+    'parsimonious',
+    'fastapi',
+    'uvicorn',
+    'requests',
+]
+name = "idef0svg"
+version = "0.0.1"
+
+[project.optional-dependencies]
+debug = [
+    "ruff",
+    "ty",
+    "pytest",
+]
+
+[project.urls]
+Repository = "https://github.com/antonysigma/IDEF0SVG/"
+
+[tool.ruff]
+line-length = 80
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "I",
+    "F",
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 30
+
+[tool.setuptools]
+packages = [
+    "idef0svg",
+]
