@@ -1,0 +1,30 @@
+name: Ansible Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  ansible-lint:
+    name: ansible-lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          python-version: "3.12"
+          activate-environment: true
+          enable-cache: true
+          cache-dependency-glob: requirements*.txt
+
+      - name: Resolve ansible dependencies
+        run: uv pip install -r requirements.txt
+
+      - name: Run ansible-lint
+        run: ./.venv/bin/ansible-lint deploy-everything.playbook.yml
