@@ -27,4 +27,4 @@ jobs:
         run: uv pip install -r requirements.txt
 
       - name: Run ansible-lint
-        run: ./.venv/bin/ansible-lint deploy-everything.playbook.yml
+        run: ./.venv/bin/ansible-lint deploy-everything.playbook.yml roles/

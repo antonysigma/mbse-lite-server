@@ -1,49 +1,18 @@
 ---
-- name: UV paths
-  ansible.builtin.set_fact:
-    uv: "{{ idef0_server_home }}/.cargo/bin/uv"
-    python: "{{ idef0_server_home }}/.local/share/uv/python/cpython-3.12.6-linux-x86_64-gnu/bin/python3.12"
-
-- name: Install UV the Python package manager
-  ansible.builtin.script:
-    cmd: install.sh
-    creates: "{{ uv }}"
-  become: true
-  become_user: "{{ idef0_server_user }}"
-
-- name: Install Python 3.12
-  ansible.builtin.command:
-    cmd: >-
-      "{{ uv }}" python install 3.12
-    chdir: "{{ idef0_server_home }}"
-    creates: "{{ python }}"
-  become: true
-  become_user: "{{ idef0_server_user }}"
-
-- name: Setup virtual environment
-  ansible.builtin.command:
-    cmd: >-
-      "{{ uv }}" venv
-      --python "{{ python }}"
-      --seed
-    chdir: "{{ idef0_server_home }}"
-    creates: "{{ idef0_server_home }}/.venv/bin/python3.12"
-  become: true
-  become_user: "{{ idef0_server_user }}"
-
 - name: Install idef0 python code
-  ansible.posix.synchronize:
+  ansible.builtin.copy:
     src: "{{ playbook_dir }}/roles/idef0_server/files/idef0-svg-wrapper/"
     dest: "{{ idef0_server_home }}/idef0-svg-wrapper/"
+    owner: "{{ idef0_server_user }}"
+    group: "{{ idef0_server_user }}"
+    mode: preserve
   become: true
-  become_user: "{{ idef0_server_user }}"
 
 - name: Install idef0 python wrapper
-  ansible.builtin.command:
-    cmd: >-
-      "{{ uv }}" pip install
-      -e "idef0-svg-wrapper/"
-    chdir: "{{ idef0_server_home }}"
-  changed_when: false
+  ansible.builtin.pip:
+    name: "{{ idef0_server_home }}/idef0-svg-wrapper/"
+    editable: true
+    virtualenv_command: /usr/bin/python3 -m venv
+    virtualenv: "{{ idef0_server_home }}/.venv/"
   become: true
   become_user: "{{ idef0_server_user }}"
