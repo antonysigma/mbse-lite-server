@@ -5,7 +5,7 @@
 > organization permits access to `https://plantuml.com` and the online diagram rendering APIs.
 
 This repository houses the self-documenting deployment scripts for the
-MBSE-lite's diagram rendering services.
+[MBSE-lite](https://github.com/antonysigma/mbse-lite)'s diagram rendering services.
 
 ## Minimum system requirements
 
@@ -55,7 +55,7 @@ Open your browser and check whether `https://localhost:5000` and `https://localh
 
 ### Confirming the servers are working
 
-- `http://localhost:8000/svg/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003` should output a Alice-Bob UML diagram.
+- Open the URL `http://localhost:8000/svg/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003` in your browser should output a Alice-Bob UML diagram.
 
 - (idef0svg service test #TODO )
 
@@ -65,13 +65,13 @@ Prefer microservice architecture over monolithic. Each diagram rendering service
 is supposed to be a separate process owning a separate TCP/IP port, e.g.
 PlantUML server at port 8000, and IDEF0 server at port 5000.
 
-In other words, for new diagrams, e.g. railroad diagram, we prefer a new Restful
-service (e.g. with Nodejs runtime) serving through a new TCP/IP port.
+In other words, for new diagrams, e.g. railroad diagram, we prefer a new RESTful
+service (e.g. with NodeJS runtime) serving through a new TCP/IP port.
 
 ## Folder structure
 
 Informally known as the PHP, aka "kitchen sink" architecture, the MBSE-lite
-infrastructure primarily use Python and Restful API as the glue logic of the a
+infrastructure primarily use Python and RESTful API as the glue logic of the a
 number of internal services backends. This hides the software logic from the
 non-technical authors, minimizing distractions for them to capture hardware /
 software / firmware / electrical / optics /  Algorithm / GPU system
@@ -82,7 +82,7 @@ Specifically, the Python language act as a glue to interate the following projec
 
 - IDEF0SVG text-to-SVG converter, written in Ruby;
 - High-level abstraction of the IDEF0 diagramming language, written in PEG/Python;
-- Restful web server to accept IDEF0 rendering requests, written in FastAPI/Python;
+- RESTful web server to accept IDEF0 rendering requests, written in FastAPI/Python;
 - Self-documenting, continuous deployment script of the IT infrastructure, written in Ansible/Python.
 - Various sanity checking scripts in TOML, Ruff, NodeJs, and Mypy.
 
