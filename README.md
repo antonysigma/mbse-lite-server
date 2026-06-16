@@ -9,7 +9,7 @@ MBSE-lite's diagram rendering services.
 
 ## Minimum system requirements
 
-- Ubuntu Desktop
+- Linux with a Desktop environment
 - Python >= 3.10
 
 ## Quick start
@@ -41,6 +41,23 @@ ansible-playbook -K deploy-everything.playbook.yml
 > the Ansible local tool, please remove the argument `-K` from the command, the
 > Ansible tool will in turn explain the key deployment step(s) requiring
 > Administrator permissions.
+
+> [!NOTE]
+> For SELinux (Security-Enhanced Linux) (for example, Fedora), you will need to run
+> ```
+> sudo semanage fcontext -a -t bin_t "/srv/idef0svg-server/.venv/bin(/.*)?"
+> sudo restorecon -Rv /srv/idef0svg-server/.venv/bin
+> sudo systemctl restart idef0svg.service
+> ```
+> to complete the setup.
+
+Open your browser and check whether `https://localhost:5000` and `https://localhost:8000` is working.
+
+### Confirming the servers are working
+
+- `http://localhost:8000/svg/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003` should output a Alice-Bob UML diagram.
+
+- (idef0svg service test #TODO )
 
 ## Contributing
 
