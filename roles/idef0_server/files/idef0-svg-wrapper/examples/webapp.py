@@ -20,7 +20,7 @@ def render(base64_data: str):
     iv = IdefVisitor()
     parsed = iv.visit(tree)
 
-    process = p.Popen("./bin/schematic", stdin=p.PIPE, stdout=p.PIPE)
+    process = p.Popen("./IDEF0-SVG/bin/schematic", stdin=p.PIPE, stdout=p.PIPE)
     svg_data: bytes = process.communicate(parsed.encode("utf-8"))[0]
 
     return Response(content=svg_data, media_type="image/svg+xml")

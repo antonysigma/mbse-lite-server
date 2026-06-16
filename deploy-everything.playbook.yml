@@ -2,5 +2,8 @@
 - name: MBSE-lite IT infrastructure
   hosts: localhost
   connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - plantuml_server
+    - idef0_server

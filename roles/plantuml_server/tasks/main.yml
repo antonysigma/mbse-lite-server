@@ -33,7 +33,6 @@
     group: "{{ plantuml_server_user }}"
     mode: "0644"
   become: true
-  become_user: "{{ plantuml_server_user }}"
   notify: Restart PlantUML server
 
 - name: Install PlantUML systemd service

@@ -1,0 +1,18 @@
+---
+- name: Install idef0 python code
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/roles/idef0_server/files/idef0-svg-wrapper/"
+    dest: "{{ idef0_server_home }}/idef0-svg-wrapper/"
+    owner: "{{ idef0_server_user }}"
+    group: "{{ idef0_server_user }}"
+    mode: preserve
+  become: true
+
+- name: Install idef0 python wrapper
+  ansible.builtin.pip:
+    name: "{{ idef0_server_home }}/idef0-svg-wrapper/"
+    editable: true
+    virtualenv_command: /usr/bin/python3 -m venv
+    virtualenv: "{{ idef0_server_home }}/.venv/"
+  become: true
+  become_user: "{{ idef0_server_user }}"

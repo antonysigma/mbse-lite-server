@@ -28,13 +28,13 @@ jobs:
           cache-dependency-glob: roles/idef0_server/files/pyproject.toml
 
       - name: Resolve python 3rd party dependencies
-        run: uv pip install -e roles/idef0_server/files[debug]
+        run: uv pip install -e roles/idef0_server/files/idef0-svg-wrapper[debug]
 
       - name: Run static analyzer
-        run: ./.venv/bin/ruff check roles/idef0_server/files
+        run: ./.venv/bin/ruff check roles/idef0_server/files/idef0-svg-wrapper
 
       - name: Run type analyzer
-        run: ./.venv/bin/ty check roles/idef0_server/files
+        run: ./.venv/bin/ty check roles/idef0_server/files/idef0-svg-wrapper
 
       - name: Run unit tests
-        run: ./.venv/bin/pytest -rx roles/idef0_server/files/tests
+        run: ./.venv/bin/pytest -rx roles/idef0_server/files/idef0-svg-wrapper/tests

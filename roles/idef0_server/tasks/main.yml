@@ -1,0 +1,44 @@
+---
+- name: Create idef0 service user
+  ansible.builtin.user:
+    name: "{{ idef0_server_user }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ idef0_server_home }}"
+    create_home: false
+    state: present
+  become: true
+
+- name: Create idef0 server directory
+  ansible.builtin.file:
+    path: "{{ idef0_server_home }}"
+    state: directory
+    owner: "{{ idef0_server_user }}"
+    group: "{{ idef0_server_user }}"
+    mode: "0755"
+  become: true
+
+- name: Setup idef0 python wrapper
+  ansible.builtin.include_tasks: setup_idef0_python.yml
+
+- name: Setup Ruby
+  ansible.builtin.include_tasks: setup_idef0_ruby.yml
+
+- name: Install idef0svg systemd service
+  ansible.builtin.template:
+    src: idef0svg.service.j2
+    dest: "/etc/systemd/system/idef0svg.service"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify:
+    - Reload systemd configs
+    - Restart PlantUML server
+
+- name: Enable and start idef0svg server
+  ansible.builtin.systemd:
+    name: "idef0svg.service"
+    enabled: true
+    state: started
+  become: true

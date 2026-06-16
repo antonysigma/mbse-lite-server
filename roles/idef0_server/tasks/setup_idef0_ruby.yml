@@ -1,0 +1,16 @@
+---
+# - name: Install Ruby
+#  ansible.builtin.apt:
+#    name: ruby
+#    state: present
+#    update_cache: true
+#  become: true
+
+- name: Download opinionated fork of IDEF0-SVG
+  ansible.builtin.git:
+    repo: https://github.com/antonysigma/IDEF0-SVG.git
+    dest: "{{ idef0_server_home }}/IDEF0-SVG"
+    version: plantuml-rose-theme
+    depth: 5
+  become: true
+  become_user: "{{ idef0_server_user }}"
